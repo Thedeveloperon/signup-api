@@ -19,16 +19,33 @@ class User {
   }
 
   //login api
-  static getByEmail(email) {
+  static findByEmail(email) {
     return new Promise((resolve, reject) => {
       db.query('SELECT * FROM users WHERE email = ?', email, (err, results) => {
         if (err) {
           reject(err);
         } else {
           if (results.length === 0) {
-            resolve(null); // No user found
+            resolve(null); // User not found
           } else {
             resolve(results[0]);
+          }
+        }
+      });
+    });
+  }
+
+  //get user API
+  static findById(userId) {
+    return new Promise((resolve, reject) => {
+      db.query('SELECT id, username, email FROM users WHERE id = ?', userId, (err, result) => {
+        if (err) {
+          reject(err);
+        } else {
+          if (result.length === 0) {
+            resolve(null); // User not found
+          } else {
+            resolve(result[0]);
           }
         }
       });

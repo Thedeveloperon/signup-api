@@ -1,14 +1,10 @@
-/**
- * @module controllers/authController
- */
-
-
-// routes/authRoutes.js
 const express = require('express');
-const authController = require('../controllers/authController');
-
 const router = express.Router();
+const AuthController = require('../controllers/authController');
+const authenticate = require('../middleware/authenticate'); // Create this middleware
 
-router.post('/signup', authController.signup);
+router.post('/signup', AuthController.signup);
+router.get('/profile', authenticate, AuthController.getUserProfile);
+router.post('/login', AuthController.login); // Add this line
 
 module.exports = router;
