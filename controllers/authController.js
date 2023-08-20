@@ -1,6 +1,6 @@
 /**
  * @module controllers/authController
- * irosh
+ * 
  */
 
 const bcrypt = require('bcrypt');
