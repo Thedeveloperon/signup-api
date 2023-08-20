@@ -1,5 +1,6 @@
 /**
  * @module controllers/authController
+ * irosh
  */
 
 const bcrypt = require('bcrypt');
@@ -78,6 +79,9 @@ class AuthController {
       res.status(500).json({ message: 'Internal server error' });
     }
   }
+
+
+  
 }
 
 module.exports = AuthController;
