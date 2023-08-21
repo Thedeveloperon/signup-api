@@ -63,6 +63,24 @@ class AuthController {
     }
   }
 
+  //logout api
+  static async logout(req, res) {
+    try {
+      const token = req.headers.authorization.split(' ')[1];
+  
+      if (!token) {
+        return res.status(400).json({ message: 'Token not provided' });
+      }
+  
+      // Rest of your code
+  
+      res.status(200).json({ message: 'Logout successful' });
+    } catch (error) {
+      console.error('Logout error:', error);
+      res.status(500).json({ message: 'An error occurred during logout' });
+    }
+  }
+  
 
 
   

@@ -6,6 +6,8 @@ const authenticate = require('../middleware/authenticate'); // Create this middl
 
 router.post('/signup', AuthController.signup);
 router.post('/login', AuthController.login); // Add this line
+router.post('/logout', AuthController.logout);
+
 
 
 
