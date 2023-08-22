@@ -7,6 +7,8 @@ router.post('/signup', AuthController.signup);
 router.post('/login', AuthController.login);
 router.post('/logout', authenticate, AuthController.logout); // Apply the middleware here
 router.delete('/delete', authenticate, AuthController.deleteUser);
+router.get('/profile', authenticate, AuthController.getUserProfile);
+
 
 
 module.exports = router;

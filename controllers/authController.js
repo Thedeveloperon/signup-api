@@ -81,6 +81,7 @@ class AuthController {
     }
   }
   
+  //Delete user api
   static async deleteUser(req, res) {
     try {
       const userId = req.user.id;
@@ -92,6 +93,25 @@ class AuthController {
     } catch (error) {
       console.error('Delete user error:', error);
       res.status(500).json({ message: 'An error occurred while deleting the user' });
+    }
+  }
+
+  //Get user profile api
+  static async getUserProfile(req, res) {
+    try {
+      const userId = req.user.id;
+
+      // Get the user profile
+      const userProfile = await User.getUserProfile(userId);
+
+      if (!userProfile) {
+        return res.status(404).json({ message: 'User not found' });
+      }
+
+      res.status(200).json(userProfile);
+    } catch (error) {
+      console.error('Get user profile error:', error);
+      res.status(500).json({ message: 'An error occurred while retrieving user profile' });
     }
   }
 

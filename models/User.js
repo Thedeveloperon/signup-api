@@ -47,6 +47,25 @@ class User {
     });
   });
 }
+
+//Get user profile api
+static getUserProfile(userId) {
+  return new Promise((resolve, reject) => {
+    db.query('SELECT id, username, email FROM users WHERE id = ?', userId, (err, result) => {
+      if (err) {
+        reject(err);
+      } else {
+        if (result.length === 0) {
+          resolve(null); // User not found
+        } else {
+          resolve(result[0]);
+        }
+      }
+    });
+  });
+}
+
+
 }
 
 module.exports = User;
