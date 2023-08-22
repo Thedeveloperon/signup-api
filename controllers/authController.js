@@ -66,14 +66,9 @@ class AuthController {
   //logout api
   static async logout(req, res) {
     try {
-      const token = req.headers.authorization.split(' ')[1];
-  
-      if (!token) {
-        return res.status(400).json({ message: 'Token not provided' });
-      }
-  
-      // Rest of your code
-  
+      // No need to do anything specific for token-based authentication
+      // The client simply stops using the token for future requests
+
       res.status(200).json({ message: 'Logout successful' });
     } catch (error) {
       console.error('Logout error:', error);
@@ -112,6 +107,22 @@ class AuthController {
     } catch (error) {
       console.error('Get user profile error:', error);
       res.status(500).json({ message: 'An error occurred while retrieving user profile' });
+    }
+  }
+
+  //Update user profile
+  static async updateUserProfile(req, res) {
+    try {
+      const userId = req.user.id;
+      const updatedData = req.body; // Assuming you're sending updated data in the request body
+
+      // Update the user profile
+      await User.updateUserProfile(userId, updatedData);
+
+      res.status(200).json({ message: 'User profile updated successfully' });
+    } catch (error) {
+      console.error('Update user profile error:', error);
+      res.status(500).json({ message: 'An error occurred while updating user profile' });
     }
   }
 

@@ -65,6 +65,19 @@ static getUserProfile(userId) {
   });
 }
 
+//User update profile api
+static updateUserProfile(userId, updatedData) {
+  return new Promise((resolve, reject) => {
+    db.query('UPDATE users SET ? WHERE id = ?', [updatedData, userId], (err, result) => {
+      if (err) {
+        reject(err);
+      } else {
+        resolve(result);
+      }
+    });
+  });
+}
+
 
 }
 
