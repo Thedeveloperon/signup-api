@@ -81,6 +81,19 @@ class AuthController {
     }
   }
   
+  static async deleteUser(req, res) {
+    try {
+      const userId = req.user.id;
+
+      // Delete the user
+      await User.deleteUserById(userId);
+
+      res.status(200).json({ message: 'User deleted successfully' });
+    } catch (error) {
+      console.error('Delete user error:', error);
+      res.status(500).json({ message: 'An error occurred while deleting the user' });
+    }
+  }
 
 
   

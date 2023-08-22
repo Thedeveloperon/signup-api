@@ -35,22 +35,18 @@ class User {
     });
   }
 
-  //get user API
-  static findById(userId) {
-    return new Promise((resolve, reject) => {
-      db.query('SELECT id, username, email FROM users WHERE id = ?', userId, (err, result) => {
-        if (err) {
-          reject(err);
-        } else {
-          if (result.length === 0) {
-            resolve(null); // User not found
-          } else {
-            resolve(result[0]);
-          }
-        }
-      });
+ //Delete user api
+ static deleteUserById(userId) {
+  return new Promise((resolve, reject) => {
+    db.query('DELETE FROM users WHERE id = ?', userId, (err, result) => {
+      if (err) {
+        reject(err);
+      } else {
+        resolve(result);
+      }
     });
-  }
+  });
+}
 }
 
 module.exports = User;
