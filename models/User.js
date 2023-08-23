@@ -78,6 +78,41 @@ class User {
     });
   }
 
+  static createPost(userId, title, content) {
+    return new Promise((resolve, reject) => {
+      const post = {
+        user_id: userId,
+        title,
+        content,
+        created_at: new Date()
+      };
+
+      db.query('INSERT INTO posts SET ?', post, (err, result) => {
+        if (err) {
+          reject(err);
+        } else {
+          resolve(result);
+        }
+      });
+    });
+  }
+
+  static searchPosts(query) {
+    return new Promise((resolve, reject) => {
+      const searchQuery = `%${query}%`; // For a case-insensitive partial match
+
+      db.query('SELECT * FROM posts WHERE title LIKE ? OR content LIKE ?', [searchQuery, searchQuery], (err, results) => {
+        if (err) {
+          reject(err);
+        } else {
+          resolve(results);
+        }
+      });
+    });
+  }
+
+
+
 
 }
 
