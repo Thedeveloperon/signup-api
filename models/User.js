@@ -2,7 +2,7 @@
  * @module controllers/authController
  */
 
-
+//Create user api
 const db = require('../config/db');
 
 class User {
