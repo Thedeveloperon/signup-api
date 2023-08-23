@@ -1,5 +1,6 @@
 /**
  * @module controllers/authController
+ * 
  */
 
 const bcrypt = require('bcrypt');
@@ -36,14 +37,16 @@ class AuthController {
       console.error('Signup error:', error);
       res.status(500).json({ message: 'Internal server error' });
     }
-  
+
 
   }
+
+
   //login API declarion
   static async login(req, res) {
     try {
       const { email, password } = req.body;
-      
+
       const user = await User.findByEmail(email);
       if (!user) {
         return res.status(401).json({ message: 'Invalid credentials' });
@@ -55,7 +58,7 @@ class AuthController {
       }
 
       const token = jwtConfig.generateToken(user);
-      
+
       res.status(200).json({ message: 'Login successful', token });
     } catch (error) {
       console.error('Login error:', error);
@@ -63,22 +66,71 @@ class AuthController {
     }
   }
 
-  //get user profile api
+  //logout api
+  static async logout(req, res) {
+    try {
+      // No need to do anything specific for token-based authentication
+      // The client simply stops using the token for future requests
+
+      res.status(200).json({ message: 'Logout successful' });
+    } catch (error) {
+      console.error('Logout error:', error);
+      res.status(500).json({ message: 'An error occurred during logout' });
+    }
+  }
+
+  //Delete user api
+  static async deleteUser(req, res) {
+    try {
+      const userId = req.user.id;
+
+      // Delete the user
+      await User.deleteUserById(userId);
+
+      res.status(200).json({ message: 'User deleted successfully' });
+    } catch (error) {
+      console.error('Delete user error:', error);
+      res.status(500).json({ message: 'An error occurred while deleting the user' });
+    }
+  }
+
+  //Get user profile api
   static async getUserProfile(req, res) {
     try {
-      const userId = req.user.id; // Extracted from JWT token
-      const user = await User.findById(userId);
+      const userId = req.user.id;
 
-      if (!user) {
+      // Get the user profile
+      const userProfile = await User.getUserProfile(userId);
+
+      if (!userProfile) {
         return res.status(404).json({ message: 'User not found' });
       }
 
-      res.status(200).json(user);
+      res.status(200).json(userProfile);
     } catch (error) {
       console.error('Get user profile error:', error);
-      res.status(500).json({ message: 'Internal server error' });
+      res.status(500).json({ message: 'An error occurred while retrieving user profile' });
     }
   }
+
+  //Update user profile
+  static async updateUserProfile(req, res) {
+    try {
+      const userId = req.user.id;
+      const updatedData = req.body; // Assuming you're sending updated data in the request body
+
+      // Update the user profile
+      await User.updateUserProfile(userId, updatedData);
+
+      res.status(200).json({ message: 'User profile updated successfully' });
+    } catch (error) {
+      console.error('Update user profile error:', error);
+      res.status(500).json({ message: 'An error occurred while updating user profile' });
+    }
+  }
+
+
+
 }
 
 module.exports = AuthController;

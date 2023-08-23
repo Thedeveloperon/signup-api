@@ -11,10 +11,12 @@ app.use(express.json());
 
 // Import routes
 const authRoutes = require('./routes/authRoutes');
-const postsRoutes = require('./routes/postsRoutes'); // Add this line
+
+
 
 app.use('/api/auth', authRoutes);
-app.use('/api/posts', postsRoutes); // Add this line
+
+
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {

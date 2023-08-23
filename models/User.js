@@ -2,7 +2,7 @@
  * @module controllers/authController
  */
 
-
+//Create user api
 const db = require('../config/db');
 
 class User {
@@ -35,8 +35,21 @@ class User {
     });
   }
 
-  //get user API
-  static findById(userId) {
+  //Delete user api
+  static deleteUserById(userId) {
+    return new Promise((resolve, reject) => {
+      db.query('DELETE FROM users WHERE id = ?', userId, (err, result) => {
+        if (err) {
+          reject(err);
+        } else {
+          resolve(result);
+        }
+      });
+    });
+  }
+
+  //Get user profile api
+  static getUserProfile(userId) {
     return new Promise((resolve, reject) => {
       db.query('SELECT id, username, email FROM users WHERE id = ?', userId, (err, result) => {
         if (err) {
@@ -51,6 +64,21 @@ class User {
       });
     });
   }
+
+  //User update profile api
+  static updateUserProfile(userId, updatedData) {
+    return new Promise((resolve, reject) => {
+      db.query('UPDATE users SET ? WHERE id = ?', [updatedData, userId], (err, result) => {
+        if (err) {
+          reject(err);
+        } else {
+          resolve(result);
+        }
+      });
+    });
+  }
+
+
 }
 
 module.exports = User;

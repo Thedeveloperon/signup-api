@@ -3,11 +3,13 @@ const dotenv = require('dotenv');
 dotenv.config();
 
 function authenticate(req, res, next) {
-  const token = req.header('Authorization');
+  const authHeader = req.header('Authorization');
 
-  if (!token) {
-    return res.status(401).json({ message: 'Authorization token missing' });
+  if (!authHeader || !authHeader.startsWith('Bearer ')) {
+    return res.status(401).json({ message: 'Authorization token missing or invalid' });
   }
+
+  const token = authHeader.split(' ')[1];
 
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
@@ -18,5 +20,6 @@ function authenticate(req, res, next) {
     res.status(401).json({ message: 'Invalid token' });
   }
 }
+
 
 module.exports = authenticate;
