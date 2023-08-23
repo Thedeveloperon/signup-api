@@ -12,7 +12,7 @@ const jwtConfig = require('../config/jwt');
 class AuthController {
   static async signup(req, res) {
     try {
-      const { username, email, password } = req.body;
+      const { username, email, password, about } = req.body;
 
       // Check if the email is already registered
       const existingUser = await User.findByEmail(email);
@@ -26,7 +26,8 @@ class AuthController {
       const newUser = {
         username,
         email,
-        password: hashedPassword // Store the hashed password in the database
+        password: hashedPassword, // Store the hashed password in the database
+        about
       };
 
       await User.create(newUser);
