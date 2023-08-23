@@ -36,14 +36,16 @@ class AuthController {
       console.error('Signup error:', error);
       res.status(500).json({ message: 'Internal server error' });
     }
-  
+
 
   }
+
+
   //login API declarion
   static async login(req, res) {
     try {
       const { email, password } = req.body;
-      
+
       const user = await User.findByEmail(email);
       if (!user) {
         return res.status(401).json({ message: 'Invalid credentials' });
@@ -55,7 +57,7 @@ class AuthController {
       }
 
       const token = jwtConfig.generateToken(user);
-      
+
       res.status(200).json({ message: 'Login successful', token });
     } catch (error) {
       console.error('Login error:', error);
@@ -75,7 +77,7 @@ class AuthController {
       res.status(500).json({ message: 'An error occurred during logout' });
     }
   }
-  
+
   //Delete user api
   static async deleteUser(req, res) {
     try {
@@ -127,7 +129,7 @@ class AuthController {
   }
 
 
-  
+
 }
 
 module.exports = AuthController;
